@@ -1,0 +1,31 @@
+{
+  "name": "is-holiday",
+  "version": "0.0.0",
+  "description": "Get todays Federal Public Holidays",
+  "main": "index.js",
+  "repository": {
+    "url": "git@github.com:bukinoshita/is-holiday.git",
+    "type": "git"
+  },
+  "bin": {
+    "is-holiday": "index.js"
+  },
+  "author": "Bu Kinoshita <bukinoshita@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "holiday": "^0.0.1",
+    "meow": "^3.7.0",
+    "update-notifier": "^2.1.0"
+  },
+  "scripts": {
+    "test": "xo"
+  },
+  "devDependencies": {
+    "xo": "^0.17.1"
+  },
+  "xo": {
+    "space": true,
+    "esnext": true,
+    "semicolon": false
+  }
+}
