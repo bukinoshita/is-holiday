@@ -20,22 +20,22 @@ const cli = meow(`
     -h, --help           Show help options
     -v, --version        Show version
 `, {
-    alias: {
-      br: 'brazil',
-      m: 'month',
-      h: 'help',
-      v: 'version'
-    }
-  })
+  alias: {
+    br: 'brazil',
+    m: 'month',
+    h: 'help',
+    v: 'version'
+  }
+})
 
-updateNotifier({ pkg: cli.pkg }).notify()
+updateNotifier({pkg: cli.pkg}).notify()
 
 const run = () => {
   const today = new Date()
-  const day = !cli.flags.m ? today.getUTCDate() : undefined
+  const day = cli.flags.m === undefined || cli.flags.m === false ? today.getUTCDate() : undefined
   const month = today.getUTCMonth() + 1
-  const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"]
+  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December']
 
   if (cli.flags.help) {
     cli.showHelp()
