@@ -16,7 +16,7 @@ const cli = meow(`
 
   Options:
     --br, --brazil       Check if today is a holiday in Brazil
-    -m, --month          Check if today is a holiday in Brazil
+    -m, --month          Get every holiday for the current month
     -h, --help           Show help options
     -v, --version        Show version
 `, {
