@@ -27,6 +27,10 @@ $ is-holiday --help
     -v, --version        Show version
 ```
 
+## How it works
+
+<img src="https://cldup.com/5Yv9G3flej.gif"/>
+
 ## Related
 - [holiday](https://github.com/bukinoshita/holiday) — :calendar: List of Federal Public Holidays
 
