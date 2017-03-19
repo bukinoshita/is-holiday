@@ -14,17 +14,20 @@ $ npm install -g is-holiday
 ```bash
 $ is-holiday --help
 
-  Usage:
-    $ is-holiday          Check if today is a holiday
+Usage:
+  $ is-holiday          Check if today is a holiday
 
-  Example:
-    $ is-holiday
-    $ is-holiday --br
+Example:
+  $ is-holiday
+  $ is-holiday --month
+  $ is-holiday --year
 
-  Options:
-    --br, --brazil       Check if today is a holiday in Brazil
-    -h, --help           Show help options
-    -v, --version        Show version
+Options:
+  -m, --month          Get every holiday for the current month
+  -y, --year           Get every holiday for the current year
+
+  -h, --help           Show help options
+  -v, --version        Show version
 ```
 
 ## How it works
