@@ -1,6 +1,6 @@
 {
   "name": "is-holiday",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Get todays Federal Public Holidays",
   "main": "index.js",
   "repository": {
