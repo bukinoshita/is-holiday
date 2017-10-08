@@ -1,10 +1,13 @@
 {
   "name": "is-holiday",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Get todays Federal Public Holidays",
   "main": "index.js",
   "repository": "bukinoshita/is-holiday",
-  "files": ["index.js", "lib"],
+  "files": [
+    "index.js",
+    "lib"
+  ],
   "bin": {
     "is-holiday": "index.js"
   },
@@ -38,7 +41,9 @@
     "xo": "^0.17.1"
   },
   "xo": {
-    "extends": ["prettier"],
+    "extends": [
+      "prettier"
+    ],
     "rules": {
       "new-cap": 0
     }
