@@ -4,10 +4,14 @@
 const meow = require('meow')
 const updateNotifier = require('update-notifier')
 const holiday = require('holiday')
-const chalk = require('chalk')
-const {getCountry, monthList} = require('./lib/countries')
+const { gray, bold } = require('chalk')
+const spacetime = require('spacetime')
+const shoutMessage = require('shout-message')
 
-const cli = meow(`
+const rightPad = require('./lib/right-pad')
+
+const cli = meow(
+  `
   Usage:
     $ is-holiday          Check if today is a holiday
 
@@ -17,73 +21,73 @@ const cli = meow(`
     $ is-holiday --year
 
   Options:
-    -m, --month          Get every holiday for the current month
-    -y, --year           Get every holiday for the current year
+    -m, --month           Get every holiday for the current month
+    -y, --year            Get every holiday for the current year
 
-    -h, --help           Show help options
-    -v, --version        Show version
-`, {
-  alias: {
-    m: 'month',
-    y: 'year',
-    h: 'help',
-    v: 'version'
+    -h, --help            Show help options
+    -v, --version         Show version
+`,
+  {
+    alias: {
+      m: 'month',
+      y: 'year',
+      h: 'help',
+      v: 'version'
+    }
   }
-})
+)
 
-updateNotifier({pkg: cli.pkg}).notify()
+updateNotifier({ pkg: cli.pkg }).notify()
 
-const country = getCountry(cli.flags)
-const run = () => {
-  const tDate = new Date()
-  const currentDay = tDate.getUTCDate()
-  const currentMonth = tDate.getUTCMonth() + 1
-  const currentYear = tDate.getUTCFullYear()
+const run = async () => {
+  const month = cli.flags.m
+  const year = cli.flags.y
+  let range = 'day'
 
-  if (cli.flags.h) {
-    return cli.showHelp()
-  }
+  range = month ? 'month' : range
+  range = year ? 'year' : range
 
-  if (cli.flags.v) {
-    return cli.pkg.version
-  }
+  const isHoliday = await holiday({ range })
 
-  holiday({country})
-    .then(year => {
-      const today = year[currentMonth][currentDay]
-      const monthName = monthList[currentMonth - 1]
+  if (year) {
+    const months = Object.keys(isHoliday)
 
-      if (cli.flags.y) {
-        console.log(`${chalk.blue.bold(`Holidays in ${currentYear}`)} 🎊`)
+    return months.map(month => {
+      const m = month.charAt(0).toUpperCase() + month.slice(1)
+      const days = Object.keys(isHoliday[month])
 
-        Object.keys(year).map(month => {
-          console.log('\n')
-          console.log(`${chalk.green(`${chalk.bold(`Holidays in ${monthList[month - 1]}`)}:\n----`)}`)
-          return Object.keys(year[month]).map(day => console.log(`⇢ ${chalk.bold(day)}: ${year[month][day].title}`))
-        })
+      console.log(`${bold(m)}`)
+      console.log(`${rightPad(gray('# Day'), 20)} ${gray('# Holiday')}`)
 
-        return
-      }
+      days.map(day =>
+        console.log(`${rightPad(day, 10)} ${isHoliday[month][day]}`)
+      )
 
-      if (cli.flags.m && year[currentMonth]) {
-        console.log(`${chalk.green(`${chalk.bold(`Holidays in ${monthName}`)}:\n----`)}`)
-        Object.keys(year[currentMonth]).map(day => {
-          return console.log(`⇢ ${chalk.bold(day)}: ${year[currentMonth][day].title}`)
-        })
-        return
-      }
-
-      if (cli.flags.m && !year[currentMonth]) {
-        return console.log(`There're no Holidays this month 😔`)
-      }
-
-      if (!today) {
-        return console.log(`Today isn't a Holiday 😔`)
-      }
-
-      console.log(`Today is ${today.title}! 🎊`)
+      return console.log('\r\n')
     })
-    .catch(err => err)
+  }
+
+  if (month) {
+    const today = spacetime.today()
+    const s = new spacetime(today)
+    const month = s.monthName()
+    const m = month.charAt(0).toUpperCase() + month.slice(1)
+    const days = Object.keys(isHoliday)
+
+    console.log(`${bold(m)}`)
+    console.log(`${rightPad(gray('# Day'), 20)} ${gray('# Holiday')}`)
+
+    days.map(day => console.log(`${rightPad(day, 10)} ${isHoliday[day]}`))
+
+    return console.log('\r\n')
+  }
+
+  const h =
+    typeof isHoliday === 'undefined'
+      ? `Today is not a Holiday 😔`
+      : `Today is ${isHoliday}! 🎊`
+
+  shoutMessage(h)
 }
 
-run(cli)
+run()

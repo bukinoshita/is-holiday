@@ -3,32 +3,44 @@
   "version": "0.0.2",
   "description": "Get todays Federal Public Holidays",
   "main": "index.js",
-  "repository": {
-    "url": "git@github.com:bukinoshita/is-holiday.git",
-    "type": "git"
-  },
+  "repository": "bukinoshita/is-holiday",
+  "files": ["index.js", "lib"],
   "bin": {
     "is-holiday": "index.js"
   },
   "author": "Bu Kinoshita <bukinoshita@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "chalk": "^1.1.3",
-    "holiday": "^0.0.3",
-    "meow": "^3.7.0",
-    "update-notifier": "^2.1.0"
-  },
+  "keywords": [
+    "holiday",
+    "is-holiday",
+    "public",
+    "day",
+    "federal",
+    "holidays",
+    "cli"
+  ],
   "scripts": {
     "test": "xo && ava"
   },
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "holiday": "^1.0.0",
+    "left-pad": "^1.1.3",
+    "meow": "^3.7.0",
+    "shout-message": "^0.0.2",
+    "spacetime": "^1.3.3",
+    "update-notifier": "^2.1.0"
+  },
   "devDependencies": {
     "ava": "^0.18.2",
+    "eslint-config-prettier": "^2.6.0",
     "execa": "^0.6.1",
     "xo": "^0.17.1"
   },
   "xo": {
-    "space": true,
-    "esnext": true,
-    "semicolon": false
+    "extends": ["prettier"],
+    "rules": {
+      "new-cap": 0
+    }
   }
 }
